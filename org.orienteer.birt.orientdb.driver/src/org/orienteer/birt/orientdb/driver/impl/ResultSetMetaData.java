@@ -7,8 +7,18 @@
 
 package org.orienteer.birt.orientdb.driver.impl;
 
+import java.util.List;
+import java.util.Map;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+
 import org.eclipse.datatools.connectivity.oda.IResultSetMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
+
+import com.orientechnologies.orient.core.metadata.schema.OType;
+import com.orientechnologies.orient.core.record.impl.ODocument;
 
 /**
  * Implementation class of IResultSetMetaData for an ODA runtime driver.
@@ -21,16 +31,56 @@ import org.eclipse.datatools.connectivity.oda.OdaException;
  */
 public class ResultSetMetaData implements IResultSetMetaData
 {
-    
+	  private final static Map<OType, Integer> typesSqlTypes = new HashMap<OType, Integer>();
+
+	  static {
+	    typesSqlTypes.put(OType.STRING, Types.VARCHAR);
+	    typesSqlTypes.put(OType.INTEGER, Types.INTEGER);
+	    typesSqlTypes.put(OType.FLOAT, Types.FLOAT);
+	    typesSqlTypes.put(OType.SHORT, Types.SMALLINT);
+	    typesSqlTypes.put(OType.BOOLEAN, Types.BOOLEAN);
+	    typesSqlTypes.put(OType.LONG, Types.BIGINT);
+	    typesSqlTypes.put(OType.DOUBLE, Types.DECIMAL);
+	    typesSqlTypes.put(OType.DATE, Types.DATE);
+	    typesSqlTypes.put(OType.DATETIME, Types.TIMESTAMP);
+	    typesSqlTypes.put(OType.BYTE, Types.TINYINT);
+	    typesSqlTypes.put(OType.SHORT, Types.SMALLINT);
+
+	    // NOT SURE ABOUT THE FOLLOWING MAPPINGS
+	    typesSqlTypes.put(OType.BINARY, Types.JAVA_OBJECT);//Types.BINARY);
+	    typesSqlTypes.put(OType.EMBEDDED, Types.JAVA_OBJECT);
+	    typesSqlTypes.put(OType.EMBEDDEDLIST, Types.JAVA_OBJECT);
+	    typesSqlTypes.put(OType.EMBEDDEDMAP, Types.JAVA_OBJECT);
+	    typesSqlTypes.put(OType.EMBEDDEDSET, Types.JAVA_OBJECT);
+	    typesSqlTypes.put(OType.LINK, Types.JAVA_OBJECT);
+	    typesSqlTypes.put(OType.LINKLIST, Types.JAVA_OBJECT);
+	    typesSqlTypes.put(OType.LINKMAP, Types.JAVA_OBJECT);
+	    typesSqlTypes.put(OType.LINKSET, Types.JAVA_OBJECT);
+	    typesSqlTypes.put(OType.ANY, Types.JAVA_OBJECT);
+	    typesSqlTypes.put(OType.CUSTOM, Types.JAVA_OBJECT);
+	    typesSqlTypes.put(OType.TRANSIENT, Types.NULL);
+	}
+	
+	
+	private ODocument rowDoc;
+	private List<String> fieldsNames;
+	
+	
+	public ResultSetMetaData() {
+		this(new ODocument());
+	}
+	
+	public ResultSetMetaData(ODocument rowDoc) {
+		this.rowDoc = rowDoc;
+		fieldsNames = Arrays.asList(rowDoc.fieldNames());
+	}
+	
 	/*
 	 * @see org.eclipse.datatools.connectivity.oda.IResultSetMetaData#getColumnCount()
 	 */
 	public int getColumnCount() throws OdaException
 	{
-        // TODO replace with data source specific implementation
-
-        // hard-coded for demo purpose
-        return 2;
+        return fieldsNames.size();
 	}
 
 	/*
@@ -38,10 +88,7 @@ public class ResultSetMetaData implements IResultSetMetaData
 	 */
 	public String getColumnName( int index ) throws OdaException
 	{
-        // TODO replace with data source specific implementation
-
-        // hard-coded for demo purpose
-        return "Column" + index;
+        return fieldsNames.get(index-1);
 	}
 
 	/*
@@ -57,12 +104,17 @@ public class ResultSetMetaData implements IResultSetMetaData
 	 */
 	public int getColumnType( int index ) throws OdaException
 	{
-        // TODO replace with data source specific implementation
-
-        // hard-coded for demo purpose
-        if( index == 1 )
-            return java.sql.Types.INTEGER;   // as defined in data set extension manifest
-        return java.sql.Types.CHAR;          // as defined in data set extension manifest
+		//return Types.JAVA_OBJECT;//Any OrientDB field may be NULL
+		///*
+		String fieldName = getColumnName(index);
+		OType fieldType = rowDoc.fieldType(fieldName);
+		if (fieldType!=null){
+			return typesSqlTypes.get(fieldType);
+		}else{
+			return Types.VARCHAR;
+			//throw new OdaException("Unknown OType of field "+fieldName+" with index "+index);
+		}
+		//*/
 	}
 
 	/*
@@ -109,7 +161,11 @@ public class ResultSetMetaData implements IResultSetMetaData
 	public int isNullable( int index ) throws OdaException
 	{
         // TODO Auto-generated method stub
-		return IResultSetMetaData.columnNullableUnknown;
+		return IResultSetMetaData.columnNullable;
 	}
     
+    public int getColumnId( String columnName ) throws OdaException
+    {
+    	return fieldsNames.indexOf(columnName)+1;
+    }
 }

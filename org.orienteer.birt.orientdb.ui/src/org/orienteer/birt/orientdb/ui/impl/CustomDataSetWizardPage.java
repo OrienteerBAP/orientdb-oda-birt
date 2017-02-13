@@ -361,6 +361,7 @@ public class CustomDataSetWizardPage extends DataSetWizardPage
 
         // TODO replace below with data source specific implementation;
         // hard-coded parameter's default value for demo purpose
+        /*
         if( paramDesign.getParameterDefinitions().size() > 0 )
         {
             ParameterDefinition paramDef = 
@@ -368,6 +369,7 @@ public class CustomDataSetWizardPage extends DataSetWizardPage
             if( paramDef != null )
                 paramDef.setDefaultScalarValue( "dummy default value" );
         }
+        */
     }
 
     /**

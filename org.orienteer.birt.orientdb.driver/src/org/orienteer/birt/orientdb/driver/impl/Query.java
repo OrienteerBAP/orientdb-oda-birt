@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.datatools.connectivity.oda.IParameterMetaData;
@@ -23,7 +24,9 @@ import org.eclipse.datatools.connectivity.oda.SortSpec;
 import org.eclipse.datatools.connectivity.oda.spec.QuerySpecification;
 
 import com.orientechnologies.orient.core.db.document.ODatabaseDocument;
+import com.orientechnologies.orient.core.record.impl.ODocument;
 import com.orientechnologies.orient.core.sql.OCommandSQL;
+import com.orientechnologies.orient.core.sql.OCommandSQLParsingException;
 
 /**
  * Implementation class of IQuery for an ODA runtime driver.
@@ -36,7 +39,7 @@ import com.orientechnologies.orient.core.sql.OCommandSQL;
  */
 public class Query implements IQuery
 {
-	private int m_maxRows;
+	private int m_maxRows=1;
 	//private String m_preparedText;
 	private ODatabaseDocument db;
 	private OCommandSQL innerQuery;
@@ -85,7 +88,13 @@ public class Query implements IQuery
          * Replace with implementation to return an instance 
          * based on this prepared query.
          */
-		return new ResultSetMetaData();
+		int oldLimit = innerQuery.getLimit(); 
+		innerQuery.setLimit(1);
+		List<ODocument> dbResult = db.command(innerQuery).execute(parameters);
+		//ODocument dbResult = (List)(db.command(innerQuery).execute(parameters));
+		ResultSetMetaData result = new ResultSetMetaData(dbResult.get(0));
+		innerQuery.setLimit(oldLimit);
+		return result;
 	}
 
 	/*
@@ -100,9 +109,12 @@ public class Query implements IQuery
 		if (getMaxRows()>0){
 			innerQuery.setLimit(getMaxRows());
 		}
-		
-		IResultSet resultSet = new ResultSet(db.command(innerQuery).execute(parameters));
-		return resultSet;
+		try {
+			IResultSet resultSet = new ResultSet(db.command(innerQuery).execute(parameters),(ResultSetMetaData)getMetaData());
+			return resultSet;
+		} catch (OCommandSQLParsingException e) {
+			throw new OdaException(e);
+		}
 	}
 
 	/*

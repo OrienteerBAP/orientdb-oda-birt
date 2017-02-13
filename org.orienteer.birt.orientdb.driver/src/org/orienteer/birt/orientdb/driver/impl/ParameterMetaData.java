@@ -30,7 +30,7 @@ public class ParameterMetaData implements IParameterMetaData
         // TODO replace with data source specific implementation
 
         // hard-coded for demo purpose
-        return 1;
+        return 0;
 	}
 
     /*

@@ -13,16 +13,23 @@
             id="%oda.data.source.id">
          <properties>
             <property
-                  name="property1"
+                  name="url"
                   allowsEmptyValueAsNull="true"
-                  defaultDisplayName="Property 1"
+                  defaultDisplayName="OrientDB URI"
                   type="string"
                   isEncryptable="false">
             </property>
             <property
-                  name="property2"
+                  name="user"
                   allowsEmptyValueAsNull="true"
-                  defaultDisplayName="Property 2"
+                  defaultDisplayName="User Name"
+                  type="string"
+                  isEncryptable="false">
+            </property>
+            <property
+                  name="password"
+                  allowsEmptyValueAsNull="true"
+                  defaultDisplayName="Password"
                   type="string"
                   isEncryptable="false">
             </property>

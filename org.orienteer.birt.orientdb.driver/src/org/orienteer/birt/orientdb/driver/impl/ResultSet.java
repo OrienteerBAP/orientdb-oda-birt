@@ -21,6 +21,7 @@ import org.eclipse.datatools.connectivity.oda.IResultSet;
 import org.eclipse.datatools.connectivity.oda.IResultSetMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
 
+import com.orientechnologies.orient.core.index.mvrbtree.OMVRBTree.Values;
 import com.orientechnologies.orient.core.record.impl.ODocument;
 
 
@@ -39,9 +40,10 @@ public class ResultSet implements IResultSet
 	private int m_currentRowId;
 	private ODocument currentRow;
 	private List<ODocument> sqlResult;  
+	private ResultSetMetaData metadata;  
     
     @SuppressWarnings("unchecked")
-	public ResultSet(Object sqlResult) {
+	public ResultSet(Object sqlResult, ResultSetMetaData metadata) {
     	if (sqlResult instanceof List){
         	this.sqlResult = (List<ODocument>)sqlResult;
     	}else{
@@ -54,6 +56,9 @@ public class ResultSet implements IResultSet
         		this.sqlResult.add(newDoc);
     		}
     	}
+    	m_currentRowId=0;
+    	currentRow = this.sqlResult.get(m_currentRowId);
+    	this.metadata = metadata;
 	}
 	
 	/*
@@ -61,11 +66,7 @@ public class ResultSet implements IResultSet
 	 */
 	public IResultSetMetaData getMetaData() throws OdaException
 	{
-        /* TODO Auto-generated method stub
-         * Replace with implementation to return an instance 
-         * based on this result set.
-         */
-		return new ResultSetMetaData();
+		return metadata;
 	}
 
 	/*
@@ -94,7 +95,7 @@ public class ResultSet implements IResultSet
         if( m_currentRowId < maxRows )
         {
             m_currentRowId++;
-            currentRow = sqlResult.get(m_currentRowId);
+            currentRow = sqlResult.get(m_currentRowId-1);
             return true;
         }
         
@@ -123,7 +124,11 @@ public class ResultSet implements IResultSet
 	 */
 	public String getString( int index ) throws OdaException
 	{
-        return currentRow.fieldValues()[index].toString();
+		Object value = getFieldValue(index);
+		if (value!=null){
+			return value.toString();
+		}
+		return null;
 	}
 
 	/*
@@ -131,7 +136,7 @@ public class ResultSet implements IResultSet
 	 */
 	public String getString( String columnName ) throws OdaException
 	{
-	    return currentRow.field(columnName);
+	    return getString( findColumn( columnName ) );
 	}
 
 	/*
@@ -139,10 +144,7 @@ public class ResultSet implements IResultSet
 	 */
 	public int getInt( int index ) throws OdaException
 	{
-        // TODO replace with data source specific implementation
-        
-        // hard-coded for demo purpose
-        return (Integer) currentRow.fieldValues()[index];
+        return (Integer) getFieldValue(index);
 	}
 
 	/*
@@ -150,7 +152,7 @@ public class ResultSet implements IResultSet
 	 */
 	public int getInt( String columnName ) throws OdaException
 	{
-	    return currentRow.field(columnName);
+	    return getInt( findColumn( columnName ) );
 	}
 
 	/*
@@ -158,7 +160,7 @@ public class ResultSet implements IResultSet
 	 */
 	public double getDouble( int index ) throws OdaException
 	{
-        return (Double) currentRow.fieldValues()[index];
+        return (Double) getFieldValue(index);
 	}
 
 	/*
@@ -175,7 +177,7 @@ public class ResultSet implements IResultSet
 	public BigDecimal getBigDecimal( int index ) throws OdaException
 	{
         // TODO Auto-generated method stub
-        return (BigDecimal)currentRow.fieldValues()[index];
+        return new BigDecimal(getDouble( index ));
 	}
 
 	/*
@@ -191,7 +193,7 @@ public class ResultSet implements IResultSet
 	 */
 	public Date getDate( int index ) throws OdaException
 	{
-        return (Date) currentRow.fieldValues()[index];
+        return new Date(((java.util.Date)getFieldValue(index)).getTime());
 	}
 
 	/*
@@ -207,7 +209,7 @@ public class ResultSet implements IResultSet
 	 */
 	public Time getTime( int index ) throws OdaException
 	{
-        return (Time) currentRow.fieldValues()[index];
+        return (Time) getFieldValue(index);
 	}
 
 	/*
@@ -223,7 +225,7 @@ public class ResultSet implements IResultSet
 	 */
 	public Timestamp getTimestamp( int index ) throws OdaException
 	{
-        return (Timestamp) currentRow.fieldValues()[index];
+        return new Timestamp(getDate(index).getTime());
 	}
 
 	/*
@@ -273,7 +275,7 @@ public class ResultSet implements IResultSet
      */
     public boolean getBoolean( int index ) throws OdaException
     {
-        return (Boolean) currentRow.fieldValues()[index];
+        return (Boolean) getFieldValue(index);
     }
 
     /* (non-Javadoc)
@@ -289,7 +291,7 @@ public class ResultSet implements IResultSet
      */
     public Object getObject( int index ) throws OdaException
     {
-        return currentRow.fieldValues()[index];
+        return getFieldValue(index);
     }
 
     /* (non-Javadoc)
@@ -313,13 +315,12 @@ public class ResultSet implements IResultSet
      */
     public int findColumn( String columnName ) throws OdaException
     {
-    	String[] fieldNames = currentRow.fieldNames();
-    	for (int i = 0; i < fieldNames.length; i++) {
-			if (columnName.equals(fieldNames[i])){
-				return i;
-			}
-		}
-    	return -1;
+    	return ((ResultSetMetaData)getMetaData()).getColumnId(columnName);
+    }
+    
+    public Object getFieldValue( int index ) throws OdaException
+    {
+    	return currentRow.field(getMetaData().getColumnName(index));
     }
     
 }
