@@ -144,7 +144,8 @@ public class ResultSet implements IResultSet
 	 */
 	public int getInt( int index ) throws OdaException
 	{
-        return (Integer) getFieldValue(index);
+		Integer value = (Integer) getFieldValue(index);
+        return value==null?0:value;
 	}
 
 	/*
@@ -160,7 +161,8 @@ public class ResultSet implements IResultSet
 	 */
 	public double getDouble( int index ) throws OdaException
 	{
-        return (Double) getFieldValue(index);
+		Double value = (Double) getFieldValue(index);
+		return value==null?0:value;
 	}
 
 	/*
@@ -176,7 +178,6 @@ public class ResultSet implements IResultSet
 	 */
 	public BigDecimal getBigDecimal( int index ) throws OdaException
 	{
-        // TODO Auto-generated method stub
         return new BigDecimal(getDouble( index ));
 	}
 
@@ -193,7 +194,8 @@ public class ResultSet implements IResultSet
 	 */
 	public Date getDate( int index ) throws OdaException
 	{
-        return new Date(((java.util.Date)getFieldValue(index)).getTime());
+		java.util.Date value = (java.util.Date) getFieldValue(index);
+		return value==null?new Date(0):new Date(value.getTime());
 	}
 
 	/*
@@ -209,7 +211,7 @@ public class ResultSet implements IResultSet
 	 */
 	public Time getTime( int index ) throws OdaException
 	{
-        return (Time) getFieldValue(index);
+        throw new UnsupportedOperationException();
 	}
 
 	/*
@@ -225,7 +227,8 @@ public class ResultSet implements IResultSet
 	 */
 	public Timestamp getTimestamp( int index ) throws OdaException
 	{
-        return new Timestamp(getDate(index).getTime());
+		java.util.Date value = (java.util.Date) getFieldValue(index);
+		return value==null?new Timestamp(0):new Timestamp(value.getTime());
 	}
 
 	/*
@@ -275,7 +278,8 @@ public class ResultSet implements IResultSet
      */
     public boolean getBoolean( int index ) throws OdaException
     {
-        return (Boolean) getFieldValue(index);
+    	Boolean value = (Boolean) getFieldValue(index);
+        return value==null?false:value;
     }
 
     /* (non-Javadoc)
@@ -322,5 +326,4 @@ public class ResultSet implements IResultSet
     {
     	return currentRow.field(getMetaData().getColumnName(index));
     }
-    
 }

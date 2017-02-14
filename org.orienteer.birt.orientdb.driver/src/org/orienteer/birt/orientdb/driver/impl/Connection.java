@@ -23,22 +23,25 @@ public class Connection implements IConnection
 {
     private boolean m_isOpen = false;
     private ODatabaseDocumentTx db;
+    private static final String DB_URI_PROPERTY="uri";
+    private static final String DB_USER_PROPERTY="user";
+    private static final String DB_PASSWORD_PROPERTY="password";
     
 	/*
 	 * @see org.eclipse.datatools.connectivity.oda.IConnection#open(java.util.Properties)
 	 */
+	@SuppressWarnings("resource")
 	public void open( Properties connProperties ) throws OdaException
 	{
-		String url = "remote:127.0.0.1/Orienteer";
-		String username = "admin";
-		String password = "admin";
+		String url = connProperties.getProperty(DB_URI_PROPERTY);//"remote:127.0.0.1/Orienteer";
+		String username = connProperties.getProperty(DB_USER_PROPERTY);//"admin";
+		String password = connProperties.getProperty(DB_PASSWORD_PROPERTY);//"admin";
 		
-		if(url!=null && username!=null) {
+		try {
 			db = new ODatabaseDocumentTx(url).open(username, password);
 		    m_isOpen = true;        
-		}else{
-//			throw new Exception("Cannot connect to OrientDB server without properties "+OrientDBComponent.DB_URL+" and "+OrientDBComponent.DB_USERNAME);
-		    m_isOpen = false;        
+		} catch (Exception e) {
+			throw new OdaException(e);
 		}
  	}
 
@@ -55,7 +58,7 @@ public class Connection implements IConnection
 	 */
 	public void close() throws OdaException
 	{
-		if (!db.isClosed()){
+		if (db!=null && !db.isClosed()){
 			db.close();
 		}
 		db = null;

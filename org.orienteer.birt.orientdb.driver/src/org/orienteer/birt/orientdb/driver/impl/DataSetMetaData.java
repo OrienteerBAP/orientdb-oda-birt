@@ -36,7 +36,6 @@ public class DataSetMetaData implements IDataSetMetaData
 	 */
 	public IConnection getConnection() throws OdaException
 	{
-        // TODO Auto-generated method stub
 		return m_connection;
 	}
 
@@ -53,7 +52,6 @@ public class DataSetMetaData implements IDataSetMetaData
 	 */
 	public int getDataSourceMajorVersion() throws OdaException
 	{
-        // TODO Auto-generated method stub
 		return 1;
 	}
 
@@ -62,7 +60,6 @@ public class DataSetMetaData implements IDataSetMetaData
 	 */
 	public int getDataSourceMinorVersion() throws OdaException
 	{
-        // TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -71,7 +68,6 @@ public class DataSetMetaData implements IDataSetMetaData
 	 */
 	public String getDataSourceProductName() throws OdaException
 	{
-        // TODO Auto-generated method stub
 		return "OrientDB Driver Data Source";
 	}
 
@@ -122,7 +118,6 @@ public class DataSetMetaData implements IDataSetMetaData
 	 */
 	public boolean supportsNamedParameters() throws OdaException
 	{
-        // TODO Auto-generated method stub
 		return true;
 	}
 
@@ -131,7 +126,6 @@ public class DataSetMetaData implements IDataSetMetaData
 	 */
 	public boolean supportsInParameters() throws OdaException
 	{
-        // TODO Auto-generated method stub
 		return true;
 	}
 
@@ -140,7 +134,6 @@ public class DataSetMetaData implements IDataSetMetaData
 	 */
 	public boolean supportsOutParameters() throws OdaException
 	{
-        // TODO Auto-generated method stub
 		return false;
 	}
 
@@ -149,7 +142,6 @@ public class DataSetMetaData implements IDataSetMetaData
 	 */
 	public int getSortMode()
 	{
-        // TODO Auto-generated method stub
 		return IDataSetMetaData.sortModeNone;
 	}
     

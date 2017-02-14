@@ -11,9 +11,13 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.datatools.connectivity.oda.IParameterMetaData;
 import org.eclipse.datatools.connectivity.oda.IResultSet;
@@ -43,6 +47,7 @@ public class Query implements IQuery
 	//private String m_preparedText;
 	private ODatabaseDocument db;
 	private OCommandSQL innerQuery;
+	private ResultSetMetaData curMetaData;
 	
 	private Map<String,String> properties;
 	private Map<String,Object> parameters;
@@ -59,8 +64,7 @@ public class Query implements IQuery
 	public void prepare( String queryText ) throws OdaException
 	{
 		innerQuery = new OCommandSQL(queryText);
-		
-        //m_preparedText = queryText;
+		updateMetaData(); 
 	}
 	
 	/*
@@ -84,39 +88,62 @@ public class Query implements IQuery
 	 */
 	public IResultSetMetaData getMetaData() throws OdaException
 	{
-        /* TODO Auto-generated method stub
-         * Replace with implementation to return an instance 
-         * based on this prepared query.
-         */
-		int oldLimit = innerQuery.getLimit(); 
-		innerQuery.setLimit(1);
-		List<ODocument> dbResult = db.command(innerQuery).execute(parameters);
-		//ODocument dbResult = (List)(db.command(innerQuery).execute(parameters));
-		ResultSetMetaData result = new ResultSetMetaData(dbResult.get(0));
-		innerQuery.setLimit(oldLimit);
-		return result;
+		return curMetaData; 
 	}
+	
+	private void updateMetaData() throws OdaException
+	{
+		int oldLimit = innerQuery.getLimit(); 
+		try {
 
+			Pattern pattern = Pattern.compile("(select.*)where");
+			Matcher mat = pattern.matcher(innerQuery.getText());
+			OCommandSQL query = innerQuery;
+			if (mat.find()){
+				query = new OCommandSQL(mat.group(1));
+			}
+			query.setLimit(1);
+			List<ODocument> dbResult = getOrMakeDBResult(db.command(query).execute(parameters));
+			curMetaData = new ResultSetMetaData(dbResult.get(0));
+			query.setLimit(oldLimit);
+		} catch (OCommandSQLParsingException e) {
+			throw new OdaException(e);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	/*
 	 * @see org.eclipse.datatools.connectivity.oda.IQuery#executeQuery()
 	 */
+	@SuppressWarnings("unchecked")
 	public IResultSet executeQuery() throws OdaException
 	{
-        /* TODO Auto-generated method stub
-         * Replace with implementation to return an instance 
-         * based on this prepared query.
-         */
 		if (getMaxRows()>0){
 			innerQuery.setLimit(getMaxRows());
 		}
 		try {
-			IResultSet resultSet = new ResultSet(db.command(innerQuery).execute(parameters),(ResultSetMetaData)getMetaData());
-			return resultSet;
+			List<ODocument> dbResult = getOrMakeDBResult(db.command(innerQuery).execute(parameters));
+			return new ResultSet(dbResult,curMetaData);
 		} catch (OCommandSQLParsingException e) {
 			throw new OdaException(e);
 		}
 	}
 
+	private List<ODocument> getOrMakeDBResult(Object result) throws OdaException{
+		if (!(result instanceof List)){
+			throw new OdaException("OrientDB query result is not a list!");
+		}
+		List<ODocument> dbResult = (List<ODocument>) result;
+		if (dbResult.size()>0){
+			return dbResult;
+		}else{
+			List<ODocument> fakeDBResult = new ArrayList<ODocument>(1); 
+			ODocument fakeDBResultdoc = new ODocument(); 
+			fakeDBResultdoc.field("emptyResult", "");
+			fakeDBResult.add(fakeDBResultdoc);
+			return fakeDBResult;
+		}
+	}
 	/*
 	 * @see org.eclipse.datatools.connectivity.oda.IQuery#setProperty(java.lang.String, java.lang.String)
 	 */

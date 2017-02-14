@@ -60,16 +60,23 @@ public class ResultSetMetaData implements IResultSetMetaData
 	    typesSqlTypes.put(OType.CUSTOM, Types.JAVA_OBJECT);
 	    typesSqlTypes.put(OType.TRANSIENT, Types.NULL);
 	}
+	private final static Map<Integer, Boolean> sqlTypesMayBeNull = new HashMap<Integer, Boolean>();
+	static {
+		sqlTypesMayBeNull.put(Types.JAVA_OBJECT, true);
+		sqlTypesMayBeNull.put(Types.NULL, true);
+		sqlTypesMayBeNull.put(Types.VARCHAR, true);
+		sqlTypesMayBeNull.put(Types.VARCHAR, true);
+	}
 	
 	
 	private ODocument rowDoc;
 	private List<String> fieldsNames;
 	
-	
+	/*
 	public ResultSetMetaData() {
-		this(new ODocument());
+		this(new ODocument().field("emptyResult", ""));
 	}
-	
+	*/
 	public ResultSetMetaData(ODocument rowDoc) {
 		this.rowDoc = rowDoc;
 		fieldsNames = Arrays.asList(rowDoc.fieldNames());
@@ -160,8 +167,12 @@ public class ResultSetMetaData implements IResultSetMetaData
 	 */
 	public int isNullable( int index ) throws OdaException
 	{
-        // TODO Auto-generated method stub
-		return IResultSetMetaData.columnNullable;
+		int type =  getColumnType( index );
+		if (sqlTypesMayBeNull.containsKey(type)){
+			return IResultSetMetaData.columnNullable;
+		}else{
+			return IResultSetMetaData.columnNoNulls;
+		}
 	}
     
     public int getColumnId( String columnName ) throws OdaException
