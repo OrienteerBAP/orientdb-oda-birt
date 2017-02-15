@@ -5,7 +5,7 @@
  *************************************************************************
  */
 
-package org.orienteer.birt.orientdb.driver.impl;
+package org.orienteer.birt.orientdb.impl;
 
 import java.util.List;
 import java.util.Map;

@@ -5,7 +5,7 @@
  *************************************************************************
  */
 
-package org.orienteer.birt.orientdb.driver.impl;
+package org.orienteer.birt.orientdb.impl;
 
 import org.eclipse.datatools.connectivity.oda.IConnection;
 import org.eclipse.datatools.connectivity.oda.IDriver;
@@ -20,7 +20,7 @@ import org.eclipse.datatools.connectivity.oda.util.manifest.ManifestExplorer;
  */
 public class Driver implements IDriver
 {
-    static String ODA_DATA_SOURCE_ID = "org.orienteer.birt.orientdb.driver";  //$NON-NLS-1$
+    static String ODA_DATA_SOURCE_ID = "org.orienteer.birt.orientdb";  //$NON-NLS-1$
     
 	/*
 	 * @see org.eclipse.datatools.connectivity.oda.IDriver#getConnection(java.lang.String)

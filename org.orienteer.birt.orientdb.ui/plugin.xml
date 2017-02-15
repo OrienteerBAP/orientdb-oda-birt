@@ -51,8 +51,8 @@
       <dataSetUI
             supportsOutParameters="false"
             supportsInParameters="true"
-            initialPageId="org.orienteer.birt.orientdb.driver.dataSet.page1"
-            id="org.orienteer.birt.orientdb.driver.dataSet">
+            initialPageId="org.orienteer.birt.orientdb.dataSet.page1"
+            id="org.orienteer.birt.orientdb.dataSet">
          <dataSetWizard
                class="org.eclipse.datatools.connectivity.oda.design.ui.wizards.DataSetWizard"
                windowTitle="%wizard.data.set.window.title">
@@ -62,7 +62,7 @@
                icon="icons/datasetpage.ico"
                wizardPageClass="org.orienteer.birt.orientdb.ui.impl.CustomDataSetWizardPage"
                path="/"
-               id="org.orienteer.birt.orientdb.driver.dataSet.page1">
+               id="org.orienteer.birt.orientdb.dataSet.page1">
          </dataSetPage>
       </dataSetUI>
    </extension>

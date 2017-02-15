@@ -5,7 +5,7 @@
  *************************************************************************
  */
 
-package org.orienteer.birt.orientdb.driver.impl;
+package org.orienteer.birt.orientdb.impl;
 
 import org.eclipse.datatools.connectivity.oda.IParameterMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;

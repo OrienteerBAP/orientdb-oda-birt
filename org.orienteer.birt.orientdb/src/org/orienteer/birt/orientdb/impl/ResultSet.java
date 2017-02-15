@@ -5,7 +5,7 @@
  *************************************************************************
  */
 
-package org.orienteer.birt.orientdb.driver.impl;
+package org.orienteer.birt.orientdb.impl;
 
 import java.math.BigDecimal;
 import java.sql.Connection;

@@ -6,7 +6,7 @@
          id="%oda.data.source.id"
          point="org.eclipse.datatools.connectivity.oda.dataSource">
       <dataSource
-            driverClass="org.orienteer.birt.orientdb.driver.impl.Driver"
+            driverClass="org.orienteer.birt.orientdb.impl.Driver"
             defaultDisplayName="%data.source.name"
             setThreadContextClassLoader="false"
             odaVersion="3.2"
@@ -38,7 +38,7 @@
       </dataSource>
       <dataSet
             defaultDisplayName="%data.set.name"
-            id="org.orienteer.birt.orientdb.driver.dataSet">
+            id="org.orienteer.birt.orientdb.dataSet">
          <dataTypeMapping
                nativeDataTypeCode="1"
                odaScalarDataType="String"

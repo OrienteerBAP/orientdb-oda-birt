@@ -240,7 +240,7 @@ public class CustomDataSetWizardPage extends DataSetWizardPage
             /* Note: You may need to manually update your ODA runtime extension's
              * plug-in manifest to export its package for visibility here.
              */
-            IDriver customDriver = new org.orienteer.birt.orientdb.driver.impl.Driver();
+            IDriver customDriver = new org.orienteer.birt.orientdb.impl.Driver();
             
             // obtain and open a live connection
             customConn = customDriver.getConnection( null );

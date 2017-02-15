@@ -5,7 +5,7 @@
  *************************************************************************
  */
 
-package org.orienteer.birt.orientdb.driver.impl;
+package org.orienteer.birt.orientdb.impl;
 
 import java.util.Properties;
 import org.eclipse.datatools.connectivity.oda.IConnection;
