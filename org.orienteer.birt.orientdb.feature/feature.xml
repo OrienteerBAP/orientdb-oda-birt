@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.orienteer.birt.orientdb.feature"
+      label="OrientDB BIRT ODA Driver and UI"
+      version="2.1.19.qualifier"
+      provider-name="Orienteer.org">
+
+   <description>
+      Support for OrientDB in BIRT
+   </description>
+
+   <copyright>
+      Copyright 2010-2011 (C) Orienteer.org
+   </copyright>
+
+   <license url="http://www.eclipse.org/legal/epl-v10.html">
+      Eclipse Public License Version 1.0
+   </license>
+
+   <plugin
+         id="org.orienteer.birt.orientdb"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.orienteer.birt.orientdb.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

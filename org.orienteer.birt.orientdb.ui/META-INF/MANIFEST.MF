@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: org.orienteer.birt.orientdb.ui;singleton:=true
 Bundle-Version: 2.1.19.qualifier
-Bundle-Vendor: Orienteer
+Bundle-Vendor: Orienteer.org
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
