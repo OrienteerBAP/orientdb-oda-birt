@@ -9,16 +9,26 @@ package org.orienteer.birt.orientdb.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.eclipse.datatools.connectivity.oda.IResultSetMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
 
+import com.orientechnologies.common.collection.OMultiCollectionIterator;
+import com.orientechnologies.orient.core.db.record.OIdentifiable;
+import com.orientechnologies.orient.core.db.record.ridbag.ORidBag;
+import com.orientechnologies.orient.core.id.ORID;
 import com.orientechnologies.orient.core.metadata.schema.OType;
 import com.orientechnologies.orient.core.record.impl.ODocument;
+import com.orientechnologies.orient.core.serialization.ODocumentSerializable;
+import com.orientechnologies.orient.core.serialization.OSerializableStream;
 
 /**
  * Implementation class of IResultSetMetaData for an ODA runtime driver.
@@ -40,11 +50,12 @@ public class ResultSetMetaData implements IResultSetMetaData
 	    typesSqlTypes.put(OType.SHORT, Types.SMALLINT);
 	    typesSqlTypes.put(OType.BOOLEAN, Types.BOOLEAN);
 	    typesSqlTypes.put(OType.LONG, Types.BIGINT);
-	    typesSqlTypes.put(OType.DOUBLE, Types.DECIMAL);
+	    typesSqlTypes.put(OType.DOUBLE, Types.DOUBLE);
 	    typesSqlTypes.put(OType.DATE, Types.DATE);
 	    typesSqlTypes.put(OType.DATETIME, Types.TIMESTAMP);
 	    typesSqlTypes.put(OType.BYTE, Types.TINYINT);
 	    typesSqlTypes.put(OType.SHORT, Types.SMALLINT);
+	    typesSqlTypes.put(OType.DECIMAL, Types.DECIMAL);
 
 	    // NOT SURE ABOUT THE FOLLOWING MAPPINGS
 	    typesSqlTypes.put(OType.BINARY, Types.JAVA_OBJECT);//Types.BINARY);
@@ -56,6 +67,7 @@ public class ResultSetMetaData implements IResultSetMetaData
 	    typesSqlTypes.put(OType.LINKLIST, Types.JAVA_OBJECT);
 	    typesSqlTypes.put(OType.LINKMAP, Types.JAVA_OBJECT);
 	    typesSqlTypes.put(OType.LINKSET, Types.JAVA_OBJECT);
+	    typesSqlTypes.put(OType.LINKBAG, Types.JAVA_OBJECT);
 	    typesSqlTypes.put(OType.ANY, Types.JAVA_OBJECT);
 	    typesSqlTypes.put(OType.CUSTOM, Types.JAVA_OBJECT);
 	    typesSqlTypes.put(OType.TRANSIENT, Types.NULL);

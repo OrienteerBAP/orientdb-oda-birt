@@ -178,7 +178,8 @@ public class ResultSet implements IResultSet
 	 */
 	public BigDecimal getBigDecimal( int index ) throws OdaException
 	{
-        return new BigDecimal(getDouble( index ));
+		BigDecimal value = (BigDecimal) getFieldValue(index);
+		return  value==null?new BigDecimal(0):value;
 	}
 
 	/*
