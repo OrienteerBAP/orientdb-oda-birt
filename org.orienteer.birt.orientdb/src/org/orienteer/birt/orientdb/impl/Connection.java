@@ -21,11 +21,13 @@ import com.orientechnologies.orient.core.db.document.ODatabaseDocumentTx;
  */
 public class Connection implements IConnection
 {
+	private static IUserDataProxy userData;
     private boolean m_isOpen = false;
     private ODatabaseDocumentTx db;
     private static final String DB_URI_PROPERTY="uri";
     private static final String DB_USER_PROPERTY="user";
     private static final String DB_PASSWORD_PROPERTY="password";
+    
     
 	/*
 	 * @see org.eclipse.datatools.connectivity.oda.IConnection#open(java.util.Properties)
@@ -34,8 +36,8 @@ public class Connection implements IConnection
 	public void open( Properties connProperties ) throws OdaException
 	{
 		String url = connProperties.getProperty(DB_URI_PROPERTY);//"remote:127.0.0.1/Orienteer";
-		String username = connProperties.getProperty(DB_USER_PROPERTY);//"admin";
-		String password = connProperties.getProperty(DB_PASSWORD_PROPERTY);//"admin";
+		String username = userData!=null?userData.getUserName():connProperties.getProperty(DB_USER_PROPERTY);//"admin";
+		String password = userData!=null?userData.getPassword():connProperties.getProperty(DB_PASSWORD_PROPERTY);//"admin";
 		
 		try {
 			db = new ODatabaseDocumentTx(url).open(username, password);
@@ -126,5 +128,14 @@ public class Connection implements IConnection
     {
         // do nothing; assumes no locale support
     }
+    
+    /**
+     * set extend user data source
+     * @param userData
+     */
+    public static void setUserData(IUserDataProxy userData) {
+    	Connection.userData = userData;
+	}
+
     
 }
