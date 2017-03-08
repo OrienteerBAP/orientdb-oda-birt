@@ -24,9 +24,9 @@ public class Connection implements IConnection
 	private static IUserDataProxy userData;
     private boolean m_isOpen = false;
     private ODatabaseDocumentTx db;
-    private static final String DB_URI_PROPERTY="uri";
-    private static final String DB_USER_PROPERTY="user";
-    private static final String DB_PASSWORD_PROPERTY="password";
+    public static final String DB_URI_PROPERTY="uri";
+    public static final String DB_USER_PROPERTY="user";
+    public static final String DB_PASSWORD_PROPERTY="password";
     
     
 	/*
