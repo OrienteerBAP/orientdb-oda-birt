@@ -70,6 +70,25 @@
 		</resources>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
+	        <plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-dependency-plugin</artifactId>
+	            <executions>
+	                <execution>
+	                    <id>copy</id>
+	                    <phase>install</phase>
+	                    <goals>
+	                        <goal>copy-dependencies</goal>
+	                    </goals>
+	                    <configuration>
+	                    	<includeArtifactIds>orientdb-client,orientdb-core,orientdb-enterprise,concurrentlinkedhashmap-lru</includeArtifactIds>
+	                        <outputDirectory>
+	                          ${project.basedir}/lib
+	                        </outputDirectory>
+	                    </configuration>
+	                </execution>
+	            </executions>
+	        </plugin>	      
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.5.1</version>

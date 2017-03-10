@@ -5,9 +5,9 @@ Bundle-SymbolicName: org.orienteer.birt.orientdb;singleton:=true
 Bundle-Version: 2.1.19.qualifier
 Bundle-ClassPath: .,
  src,
- lib/orientdb-core-2.1.19.jar,
  lib/concurrentlinkedhashmap-lru-1.4.1.jar,
  lib/orientdb-client-2.1.19.jar,
+ lib/orientdb-core-2.1.19.jar,
  lib/orientdb-enterprise-2.1.19.jar
 Bundle-Vendor: Orienteer.org
 Bundle-Localization: plugin
