@@ -23,7 +23,7 @@ Include in your POM next snippets:
 <dependency>
   <groupId>org.orienteer.birt.orientdb</groupId>
   <artifactId>org.orienteer.birt.orientdb</artifactId>
-  <version><!--Your version of OrientDB--></version>
+  <version>1.0-SNAPSHOT</version>
 </dependency>
 ```
 
