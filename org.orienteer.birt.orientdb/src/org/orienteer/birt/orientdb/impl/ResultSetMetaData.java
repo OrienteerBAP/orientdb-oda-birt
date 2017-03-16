@@ -9,26 +9,15 @@ package org.orienteer.birt.orientdb.impl;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.io.Serializable;
-import java.math.BigDecimal;
 import java.sql.Types;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 
 import org.eclipse.datatools.connectivity.oda.IResultSetMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
 
-import com.orientechnologies.common.collection.OMultiCollectionIterator;
-import com.orientechnologies.orient.core.db.record.OIdentifiable;
-import com.orientechnologies.orient.core.db.record.ridbag.ORidBag;
-import com.orientechnologies.orient.core.id.ORID;
 import com.orientechnologies.orient.core.metadata.schema.OType;
 import com.orientechnologies.orient.core.record.impl.ODocument;
-import com.orientechnologies.orient.core.serialization.ODocumentSerializable;
-import com.orientechnologies.orient.core.serialization.OSerializableStream;
 
 /**
  * Implementation class of IResultSetMetaData for an ODA runtime driver.
