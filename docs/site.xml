@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.orienteer.birt.orientdb.feature_2.1.19.201703161349.jar" id="org.orienteer.birt.orientdb.feature" version="2.1.19.201703161349">
-      <category name="orientdb_oda_birt"/>
+   <feature url="features/org.orienteer.birt.orientdb.feature_2.1.19.201703161425.jar" id="org.orienteer.birt.orientdb.feature" version="2.1.19.201703161425">
+      <category name="orientdb_oda_birt_support"/>
    </feature>
-   <category-def name="orientdb_oda_birt" label="OrientDB BIRT ODA Support"/>
+   <category-def name="orientdb_oda_birt_support" label="OrientDB ODA BIRT Support">
+      <description>
+         OrientDB ODA BIRT Support
+      </description>
+   </category-def>
 </site>
