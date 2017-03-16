@@ -1,8 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.orienteer.birt.orientdb</groupId>
-  <artifactId>org.orienteer.birt.orientdb</artifactId>
-  <version>1.0-SNAPSHOT</version>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.orienteer.birt.orientdb</groupId>
+	<artifactId>org.orienteer.birt.orientdb</artifactId>
+	<version>1.0-SNAPSHOT</version>
 	<properties>
 		<wicket.version>7.6.0</wicket.version>
 		<wicketstuff.version>7.6.0</wicketstuff.version>
@@ -17,47 +18,47 @@
 	</properties>
 	<dependencies>
 		<dependency>
-		    <groupId>org.eclipse.birt.runtime</groupId>
-		    <artifactId>org.eclipse.birt.runtime</artifactId>
-		    <version>4.4.2</version>
-		    <exclusions>
-		        <exclusion>
-		            <groupId>org.eclipse.birt.runtime</groupId>
-		            <artifactId>org.eclipse.osgi.services</artifactId>
-		        </exclusion>
-		        <exclusion>
-		            <groupId>org.eclipse.birt.runtime</groupId>
-		            <artifactId>com.ibm.icu</artifactId>
-		        </exclusion>
-		    </exclusions>
+			<groupId>org.eclipse.birt.runtime</groupId>
+			<artifactId>org.eclipse.birt.runtime</artifactId>
+			<version>4.4.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.eclipse.birt.runtime</groupId>
+					<artifactId>org.eclipse.osgi.services</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.birt.runtime</groupId>
+					<artifactId>com.ibm.icu</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
-		    <groupId>org.eclipse.birt.runtime</groupId>
-		    <artifactId>org.eclipse.osgi.services</artifactId>
-		    <version>3.4.0.v20140312-2051</version>
+			<groupId>org.eclipse.birt.runtime</groupId>
+			<artifactId>org.eclipse.osgi.services</artifactId>
+			<version>3.4.0.v20140312-2051</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.eclipse.birt.runtime</groupId>
-		    <artifactId>com.ibm.icu</artifactId>
-		    <version>52.1.1.v201501240615</version>
+			<groupId>org.eclipse.birt.runtime</groupId>
+			<artifactId>com.ibm.icu</artifactId>
+			<version>52.1.1.v201501240615</version>
 		</dependency>
-	    <dependency>
-		    <groupId>com.orientechnologies</groupId>
-		    <artifactId>orientdb-core</artifactId>
-		    <version>${orientdb.version}</version>
-	    </dependency>
-	    <dependency>
-		    <groupId>com.orientechnologies</groupId>
-		    <artifactId>orientdb-enterprise</artifactId>
-		    <version>${orientdb.version}</version>
-	    </dependency>
-	    <dependency>
-		    <groupId>com.orientechnologies</groupId>
-		    <artifactId>orientdb-client</artifactId>
-		    <version>${orientdb.version}</version>
-	    </dependency>
+		<dependency>
+			<groupId>com.orientechnologies</groupId>
+			<artifactId>orientdb-core</artifactId>
+			<version>${orientdb.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.orientechnologies</groupId>
+			<artifactId>orientdb-enterprise</artifactId>
+			<version>${orientdb.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.orientechnologies</groupId>
+			<artifactId>orientdb-client</artifactId>
+			<version>${orientdb.version}</version>
+		</dependency>
 	</dependencies>
-  <build>
+	<build>
 		<resources>
 			<resource>
 				<filtering>false</filtering>
@@ -68,47 +69,66 @@
 				</includes>
 			</resource>
 		</resources>
-    <sourceDirectory>src</sourceDirectory>
-    <plugins>
-	        <plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-dependency-plugin</artifactId>
-	            <executions>
-	                <execution>
-	                    <id>copy</id>
-	                    <phase>install</phase>
-	                    <goals>
-	                        <goal>copy-dependencies</goal>
-	                    </goals>
-	                    <configuration>
-	                    	<includeArtifactIds>orientdb-client,orientdb-core,orientdb-enterprise,concurrentlinkedhashmap-lru</includeArtifactIds>
-	                        <outputDirectory>
-	                          ${project.basedir}/lib
-	                        </outputDirectory>
-	                    </configuration>
-	                </execution>
-	            </executions>
-	        </plugin>	      
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.5.1</version>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
-      </plugin>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>install</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<includeArtifactIds>orientdb-client,orientdb-core,orientdb-enterprise,concurrentlinkedhashmap-lru</includeArtifactIds>
+							<outputDirectory>
+								${project.basedir}/lib
+							</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<!-- 
 	<plugin>
-		<groupId>org.apache.maven.plugins</groupId>
-		<artifactId>maven-jar-plugin</artifactId>
-		<version>2.4</version>
-		<configuration>
-			<archive>
-				<manifestFile>
-				META-INF/MANIFEST.MF
-				</manifestFile>
-			</archive>
-		</configuration>
-	</plugin>
-    </plugins>
-  </build>
+    <groupId>org.eclipse.cbi.maven.plugins</groupId>
+    <artifactId>eclipse-jarsigner-plugin</artifactId>
+    <version>1.1.1</version>
+        <executions>
+        <execution>
+            <id>sig</id>
+            <phase>install</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+            <inherited>false</inherited>
+            <configuration>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+       -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<archive>
+						<manifestFile>
+							META-INF/MANIFEST.MF
+						</manifestFile>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

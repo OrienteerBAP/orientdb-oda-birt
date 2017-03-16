@@ -8,7 +8,6 @@
 package org.orienteer.birt.orientdb.impl;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -21,7 +20,6 @@ import org.eclipse.datatools.connectivity.oda.IResultSet;
 import org.eclipse.datatools.connectivity.oda.IResultSetMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
 
-import com.orientechnologies.orient.core.index.mvrbtree.OMVRBTree.Values;
 import com.orientechnologies.orient.core.record.impl.ODocument;
 
 

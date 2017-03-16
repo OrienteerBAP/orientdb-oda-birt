@@ -3,7 +3,7 @@
 ### What is this?
 
 This is plugin for use [OrientDB](http://orientdb.com/) in [BIRT](https://www.eclipse.org/birt/) reports as DataSource. 
-Can be used as [Eclipse plugin](insert link to plugin) or [Maven package](insert maven archetype link here)- it is need, if you use [BIRT runtime package](https://mvnrepository.com/artifact/org.eclipse.birt.runtime). 
+Can be used as [Eclipse plugin](https://orienteerbap.github.io/orientdb-oda-birt/) or [Maven package](insert maven archetype link here)- it is need, if you use [BIRT runtime package](https://mvnrepository.com/artifact/org.eclipse.birt.runtime). 
 
 ### How to...
 
@@ -11,7 +11,7 @@ Can be used as [Eclipse plugin](insert link to plugin) or [Maven package](insert
 
 - Run you Eclipse
 - Follow Help->Install new software
-- Add resource site [insert link to plugin](insert link to plugin)
+- Add resource site [https://orienteerbap.github.io/orientdb-oda-birt/](https://orienteerbap.github.io/orientdb-oda-birt/)
 - Install plugin. Plugin versions equals OrientDB versions.
 
 #### How to install as Maven package

@@ -17,6 +17,15 @@
       Eclipse Public License Version 1.0
    </license>
 
+   <requires>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.datatools.connectivity.oda" version="3.4.0" match="compatible"/>
+      <import plugin="org.eclipse.datatools.connectivity.oda.profile" version="3.2.0" match="compatible"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.datatools.connectivity.oda.design.ui" version="3.2.0" match="compatible"/>
+      <import feature="org.eclipse.birt" version="4.6.0.v201606072122" match="compatible"/>
+   </requires>
+
    <plugin
          id="org.orienteer.birt.orientdb"
          download-size="0"
