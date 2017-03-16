@@ -12,13 +12,14 @@ Can be used as [Eclipse plugin](https://orienteerbap.github.io/orientdb-oda-birt
 - Run you Eclipse
 - Follow Help->Install new software
 - Add resource site [https://orienteerbap.github.io/orientdb-oda-birt/](https://orienteerbap.github.io/orientdb-oda-birt/)
-- Install plugin. Plugin versions equals OrientDB versions.
+- Install plugin and all dependencies. Plugin versions equals OrientDB versions.
 
 #### How to install as Maven package
 
 Include in your POM next snippets:
 
-- Maven package depedency
+Maven package dependency
+
 ```
 <dependency>
   <groupId>org.orienteer.birt.orientdb</groupId>
@@ -27,7 +28,7 @@ Include in your POM next snippets:
 </dependency>
 ```
 
-- Workaround for use OSGI module loading
+Workaround for use OSGI module loading
 
 ```
 <plugin>
