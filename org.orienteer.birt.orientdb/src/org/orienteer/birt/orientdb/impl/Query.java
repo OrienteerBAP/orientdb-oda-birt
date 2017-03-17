@@ -28,8 +28,8 @@ import org.eclipse.datatools.connectivity.oda.spec.QuerySpecification;
 
 import com.orientechnologies.orient.core.db.document.ODatabaseDocument;
 import com.orientechnologies.orient.core.record.impl.ODocument;
-import com.orientechnologies.orient.core.sql.OCommandSQL;
 import com.orientechnologies.orient.core.sql.OCommandSQLParsingException;
+import com.orientechnologies.orient.core.sql.query.OSQLSynchQuery;
 
 /**
  * Implementation class of IQuery for an ODA runtime driver.
@@ -45,7 +45,8 @@ public class Query implements IQuery
 	private int m_maxRows=1;
 	//private String m_preparedText;
 	private ODatabaseDocument db;
-	private OCommandSQL innerQuery;
+	//private OSQLSynchQuery<ODocument> innerQuery;
+	private String queryText;
 	private ResultSetMetaData curMetaData;
 	
 	private Map<String,String> properties;
@@ -62,7 +63,8 @@ public class Query implements IQuery
 	 */
 	public void prepare( String queryText ) throws OdaException
 	{
-		innerQuery = new OCommandSQL(queryText);
+		this.queryText = queryText;
+		//innerQuery = new OSQLSynchQuery<ODocument>(queryText);
 		updateMetaData(); 
 	}
 	
@@ -79,7 +81,7 @@ public class Query implements IQuery
 	 */
 	public void close() throws OdaException
 	{
-		innerQuery = null;
+		queryText = "";
 	}
 
 	/*
@@ -92,19 +94,18 @@ public class Query implements IQuery
 	
 	private void updateMetaData() throws OdaException
 	{
-		int oldLimit = innerQuery.getLimit(); 
 		try {
 
 			Pattern pattern = Pattern.compile("(select.*)where");
-			Matcher mat = pattern.matcher(innerQuery.getText());
-			OCommandSQL query = innerQuery;
+			Matcher mat = pattern.matcher(queryText);
+			OSQLSynchQuery<ODocument> query;
 			if (mat.find()){
-				query = new OCommandSQL(mat.group(1));
+				query = new OSQLSynchQuery<ODocument>(mat.group(1)+" LIMIT 1");
+			}else{
+				query = new OSQLSynchQuery<ODocument>(queryText+" LIMIT 1");
 			}
-			query.setLimit(1);
 			List<ODocument> dbResult = getOrMakeDBResult(db.command(query).execute(parameters));
 			curMetaData = new ResultSetMetaData(dbResult.get(0));
-			query.setLimit(oldLimit);
 		} catch (OCommandSQLParsingException e) {
 			throw new OdaException(e);
 		} catch (Exception e) {
@@ -117,11 +118,11 @@ public class Query implements IQuery
 	@SuppressWarnings("unchecked")
 	public IResultSet executeQuery() throws OdaException
 	{
-		if (getMaxRows()>0){
-			innerQuery.setLimit(getMaxRows());
-		}
+		String limitStr = " LIMIT "+getMaxRows();
+		String orderStr = "";
 		try {
-			List<ODocument> dbResult = getOrMakeDBResult(db.command(innerQuery).execute(parameters));
+			OSQLSynchQuery<ODocument> query = new OSQLSynchQuery<ODocument>(queryText+orderStr+limitStr);
+			List<ODocument> dbResult = getOrMakeDBResult(db.command(query).execute(parameters));
 			return new ResultSet(dbResult,curMetaData);
 		} catch (OCommandSQLParsingException e) {
 			throw new OdaException(e);
@@ -173,7 +174,6 @@ public class Query implements IQuery
 	 */
 	public void clearInParameters() throws OdaException
 	{
-        // TODO Auto-generated method stub
 		// only applies to input parameter
 		parameters.clear();
 	}
@@ -183,7 +183,6 @@ public class Query implements IQuery
 	 */
 	public void setInt( String parameterName, int value ) throws OdaException
 	{
-        // TODO Auto-generated method stub
 		// only applies to named input parameter
 		parameters.put(parameterName, value);
 	}
@@ -202,7 +201,6 @@ public class Query implements IQuery
 	 */
 	public void setDouble( String parameterName, double value ) throws OdaException
 	{
-        // TODO Auto-generated method stub
 		// only applies to named input parameter
 		parameters.put(parameterName, value);
 	}
@@ -221,7 +219,6 @@ public class Query implements IQuery
 	 */
 	public void setBigDecimal( String parameterName, BigDecimal value ) throws OdaException
 	{
-        // TODO Auto-generated method stub
 		// only applies to named input parameter
 		parameters.put(parameterName, value);
 	}
@@ -240,7 +237,6 @@ public class Query implements IQuery
 	 */
 	public void setString( String parameterName, String value ) throws OdaException
 	{
-        // TODO Auto-generated method stub
 		// only applies to named input parameter
 		parameters.put(parameterName, value);
 	}
@@ -259,7 +255,6 @@ public class Query implements IQuery
 	 */
 	public void setDate( String parameterName, Date value ) throws OdaException
 	{
-        // TODO Auto-generated method stub
 		// only applies to named input parameter
 		parameters.put(parameterName, value);
 	}
@@ -278,7 +273,6 @@ public class Query implements IQuery
 	 */
 	public void setTime( String parameterName, Time value ) throws OdaException
 	{
-        // TODO Auto-generated method stub
 		// only applies to named input parameter
 		parameters.put(parameterName, value);
 	}
@@ -297,7 +291,6 @@ public class Query implements IQuery
 	 */
 	public void setTimestamp( String parameterName, Timestamp value ) throws OdaException
 	{
-        // TODO Auto-generated method stub
 		// only applies to named input parameter
 		parameters.put(parameterName, value);
 	}
@@ -317,7 +310,6 @@ public class Query implements IQuery
     public void setBoolean( String parameterName, boolean value )
             throws OdaException
     {
-        // TODO Auto-generated method stub
         // only applies to named input parameter
 		parameters.put(parameterName, value);
     }
@@ -338,7 +330,6 @@ public class Query implements IQuery
     public void setObject( String parameterName, Object value )
             throws OdaException
     {
-        // TODO Auto-generated method stub
         // only applies to named input parameter
 		parameters.put(parameterName, value);
     }
@@ -357,7 +348,6 @@ public class Query implements IQuery
      */
     public void setNull( String parameterName ) throws OdaException
     {
-        // TODO Auto-generated method stub
         // only applies to named input parameter
 		parameters.put(parameterName, null);
     }
@@ -399,8 +389,6 @@ public class Query implements IQuery
 	public void setSortSpec( SortSpec sortBy ) throws OdaException
 	{
 		// only applies to sorting, assumes not supported
-		//sortBy.getSortOrder()
-		
         throw new UnsupportedOperationException();
 	}
 
@@ -437,8 +425,7 @@ public class Query implements IQuery
      */
     public String getEffectiveQueryText()
     {
-        // TODO Auto-generated method stub
-        return innerQuery.getText();
+        return queryText;
     }
 
     /* (non-Javadoc)
