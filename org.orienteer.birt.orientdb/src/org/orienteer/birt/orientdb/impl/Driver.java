@@ -29,7 +29,7 @@ public class Driver implements IDriver
 	{
         // assumes that this driver supports only one type of data source,
         // ignores the specified dataSourceType
-        return new Connection();
+        return new ConnectionProxy();
 	}
 
 	/*

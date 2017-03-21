@@ -14,7 +14,7 @@
          <properties>
             <property
                   name="uri"
-                  defaultValue="remote:host[:port]/OrientDBName"
+                  defaultValue="remote:host[:port]/Orient_DB_Name or http[s]://host[:port]/query/Orient_DB_Name/sql/"
                   allowsEmptyValueAsNull="true"
                   defaultDisplayName="OrientDB URI"
                   type="string"
