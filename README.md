@@ -14,6 +14,8 @@ Can be used as [Eclipse plugin](https://orienteerbap.github.io/orientdb-oda-birt
 - Add resource site [https://orienteerbap.github.io/orientdb-oda-birt/](https://orienteerbap.github.io/orientdb-oda-birt/)
 - Install plugin and all dependencies. Plugin versions equals OrientDB versions.
 
+You may use it with binary or HTTP OrientDB API. Since version 2.2 support HTTP API parameters.
+
 #### How to install as Maven package
 
 Include in your POM next snippets:
