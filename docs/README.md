@@ -22,7 +22,7 @@ Maven package dependency
 
 ```
 <dependency>
-  <groupId>org.orienteer.birt.orientdb</groupId>
+  <groupId>org.orienteer</groupId>
   <artifactId>org.orienteer.birt.orientdb</artifactId>
   <version>1.0-SNAPSHOT</version>
 </dependency>
