@@ -4,6 +4,34 @@
 	<groupId>org.orienteer.birt.orientdb</groupId>
 	<artifactId>org.orienteer.birt.orientdb</artifactId>
 	<version>1.0-SNAPSHOT</version>
+	<scm>
+		<url>https://github.com/OrienteerBAP/orientdb-oda-birt</url>
+		<connection>scm:git:ssh://github.com/OrienteerBAP/orientdb-oda-birt.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/OrienteerBAP/orientdb-oda-birt.git</developerConnection>
+	</scm>
+	<issueManagement>
+		<system>github</system>
+		<url>https://github.com/OrienteerBAP/orientdb-oda-birt/issues</url>
+	</issueManagement>
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<developers>
+		<developer>
+			<name>Sergey Arabskii</name>
+			<email>barm@mail.ru</email>
+		</developer>
+	</developers>
+	<licenses>
+		<license>
+			<name>Eclipse Public License Version 1.0</name>
+			<url>http://www.eclipse.org/legal/epl-v10.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 	<properties>
 		<wicket.version>7.6.0</wicket.version>
 		<wicketstuff.version>7.6.0</wicketstuff.version>
@@ -16,6 +44,18 @@
 		<!-- allowed values: R7, 1.0, 1.5, 2.0 or none -->
 		<wtp.version>none</wtp.version>
 	</properties>
+	<repositories>
+		<repository>
+			<id>snapshots-repo</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.eclipse.birt.runtime</groupId>
@@ -98,25 +138,10 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
-			<!-- 
-	<plugin>
-    <groupId>org.eclipse.cbi.maven.plugins</groupId>
-    <artifactId>eclipse-jarsigner-plugin</artifactId>
-    <version>1.1.1</version>
-        <executions>
-        <execution>
-            <id>sig</id>
-            <phase>install</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-            <inherited>false</inherited>
-            <configuration>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-       -->
+			<!-- <plugin> <groupId>org.eclipse.cbi.maven.plugins</groupId> <artifactId>eclipse-jarsigner-plugin</artifactId> 
+				<version>1.1.1</version> <executions> <execution> <id>sig</id> <phase>install</phase> 
+				<goals> <goal>sign</goal> </goals> <inherited>false</inherited> <configuration> 
+				</configuration> </execution> </executions> </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -131,4 +156,64 @@
 			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>1.6.7</version>
+						<extensions>true</extensions>
+						<configuration>
+							<serverId>ossrh</serverId>
+							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+							<autoReleaseAfterClose>true</autoReleaseAfterClose>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>3.0.0</version>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.10.3</version>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
