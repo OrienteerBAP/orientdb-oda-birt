@@ -115,7 +115,6 @@ public class Query implements IQuery
 	/*
 	 * @see org.eclipse.datatools.connectivity.oda.IQuery#executeQuery()
 	 */
-	@SuppressWarnings("unchecked")
 	public IResultSet executeQuery() throws OdaException
 	{
 		String limitStr = " LIMIT "+getMaxRows();
@@ -129,6 +128,7 @@ public class Query implements IQuery
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private List<ODocument> getOrMakeDBResult(Object result) throws OdaException{
 		if (!(result instanceof List)){
 			throw new OdaException("OrientDB query result is not a list!");

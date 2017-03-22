@@ -3,12 +3,9 @@ package org.orienteer.birt.orientdb.impl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -59,7 +56,7 @@ public class HttpQuery implements IQuery{
 			con.setRequestProperty("Authorization", "Basic " + DatatypeConverter.printBase64Binary((username + ":" + password).getBytes()));
 
 	
-			int responseCode = con.getResponseCode();
+			//int responseCode = con.getResponseCode();
 	
 			BufferedReader in;
 				in = new BufferedReader(

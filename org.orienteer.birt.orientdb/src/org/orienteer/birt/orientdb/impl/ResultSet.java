@@ -81,7 +81,11 @@ public class ResultSet implements IResultSet
 	 */
 	protected int getMaxRows()
 	{
-		return sqlResult.size();
+		if(sqlResult!=null){
+			return sqlResult.size();
+		}else{
+			return m_maxRows;
+		}
 	}
 
 	/*
