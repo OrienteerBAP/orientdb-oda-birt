@@ -117,10 +117,12 @@ public class Query implements IQuery
 	 */
 	public IResultSet executeQuery() throws OdaException
 	{
-		String limitStr = " LIMIT "+getMaxRows();
-		String orderStr = "";
+		String currentQueryText = queryText;
+		if(getMaxRows()!=0){
+			currentQueryText = currentQueryText+ " LIMIT "+getMaxRows(); 
+		}
 		try {
-			OSQLSynchQuery<ODocument> query = new OSQLSynchQuery<ODocument>(queryText+orderStr+limitStr);
+			OSQLSynchQuery<ODocument> query = new OSQLSynchQuery<ODocument>(currentQueryText);
 			List<ODocument> dbResult = getOrMakeDBResult(db.command(query).execute(parameters));
 			return new ResultSet(dbResult,curMetaData);
 		} catch (OCommandSQLParsingException e) {

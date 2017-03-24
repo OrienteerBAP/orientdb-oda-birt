@@ -19,6 +19,10 @@
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
+	<organization>
+		<name>Orienteer</name>
+		<url>http://orienteer.org</url>
+	</organization>
 	<developers>
 		<developer>
 			<name>Sergey Arabskii</name>
