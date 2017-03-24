@@ -3,7 +3,7 @@
 ### What is this?
 
 This is plugin for use [OrientDB](http://orientdb.com/) in [BIRT](https://www.eclipse.org/birt/) reports as DataSource. 
-Can be used as [Eclipse plugin](https://orienteerbap.github.io/orientdb-oda-birt/) or [Maven package](insert maven archetype link here)- it is need, if you use [BIRT runtime package](https://mvnrepository.com/artifact/org.eclipse.birt.runtime). 
+Can be used as [Eclipse plugin](https://orienteerbap.github.io/orientdb-oda-birt/) or Maven package - it is need, if you use [BIRT runtime package](https://mvnrepository.com/artifact/org.eclipse.birt.runtime). 
 
 ### How to...
 
@@ -14,9 +14,28 @@ Can be used as [Eclipse plugin](https://orienteerbap.github.io/orientdb-oda-birt
 - Add resource site [https://orienteerbap.github.io/orientdb-oda-birt/](https://orienteerbap.github.io/orientdb-oda-birt/)
 - Install plugin and all dependencies. Plugin versions equals OrientDB versions.
 
+You may use it with binary or HTTP OrientDB API. Now not support HTTP API parameters.
+
 #### How to install as Maven package
 
 Include in your POM next snippets:
+
+Sonatype snapshot repository
+
+```
+<repositories>
+	<repository>
+		<id>snapshots-repo</id>
+		<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		<releases>
+			<enabled>false</enabled>
+		</releases>
+		<snapshots>
+			<enabled>true</enabled>
+		</snapshots>
+	</repository>
+</repositories>
+```
 
 Maven package dependency
 
@@ -28,26 +47,3 @@ Maven package dependency
 </dependency>
 ```
 
-Workaround for use OSGI module loading
-
-```
-<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-dependency-plugin</artifactId>
-    <executions>
-        <execution>
-            <id>copy</id>
-            <phase>install</phase>
-            <goals>
-                <goal>copy-dependencies</goal>
-            </goals>
-            <configuration>
-            	<includeArtifactIds>org.orienteer.birt.orientdb</includeArtifactIds>
-                <outputDirectory>
-                  ${project.build.outputDirectory}/WEB-INF/lib
-                </outputDirectory>
-            </configuration>
-        </execution>
-    </executions>
-</plugin>	
-```
