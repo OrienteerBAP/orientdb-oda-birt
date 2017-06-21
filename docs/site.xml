@@ -3,6 +3,9 @@
    <feature url="features/org.orienteer.birt.orientdb.feature_2.1.19.201703211611.jar" id="org.orienteer.birt.orientdb.feature" version="2.1.19.201703211611">
       <category name="orientdb_oda_birt_support"/>
    </feature>
+   <feature url="features/org.orienteer.birt.orientdb.feature_2.2.20.201706211203.jar" id="org.orienteer.birt.orientdb.feature" version="2.2.20.201706211203">
+      <category name="orientdb_oda_birt_support"/>
+   </feature>
    <category-def name="orientdb_oda_birt_support" label="OrientDB ODA BIRT Support">
       <description>
          OrientDB ODA BIRT Support
