@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -37,7 +38,7 @@ public class HttpQuery implements IQuery{
 	}
 	
 	@Override
-	public void prepare(String arg0) throws OdaException {
+	public void prepare(String query) throws OdaException {
 
 		Properties connProperties = connection.getProperties();
 		String url = connProperties.getProperty(Connection.DB_URI_PROPERTY);//"remote:127.0.0.1/Orienteer";
@@ -46,7 +47,7 @@ public class HttpQuery implements IQuery{
 
 		try {
 		
-			URL obj = new URL(url+arg0);
+			URL obj = new URL(url+URLEncoder.encode(query, "UTF-8"));
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 	
 			con.setRequestMethod("GET");
