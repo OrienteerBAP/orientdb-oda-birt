@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -124,6 +125,15 @@ public class Query implements IQuery
 		try {
 			OSQLSynchQuery<ODocument> query = new OSQLSynchQuery<ODocument>(currentQueryText);
 			List<ODocument> dbResult = getOrMakeDBResult(db.command(query).execute(parameters));
+			/*
+			ArrayList<ODocument> unCachedResult = new ArrayList<ODocument>(dbResult.size());
+			for (ODocument oDocument : dbResult) {
+				ODocument newDoc = new ODocument();
+				for (Entry<String, Object> entry : oDocument) {
+					newDoc.field(entry.getKey(),entry.getValue());
+				}
+				unCachedResult.add(newDoc);
+			}*/
 			return new ResultSet(dbResult,curMetaData);
 		} catch (OCommandSQLParsingException e) {
 			throw new OdaException(e);

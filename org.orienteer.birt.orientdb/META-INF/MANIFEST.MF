@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: org.orienteer.birt.orientdb;singleton:=true
-Bundle-Version: 2.2.20.qualifier
+Bundle-Version: 2.2.23.qualifier
 Bundle-ClassPath: .,
  src,
  lib/concurrentlinkedhashmap-lru-1.4.1.jar,
- lib/orientdb-client-2.2.20.jar,
- lib/orientdb-core-2.2.20.jar
+ lib/orientdb-client-2.2.23.jar,
+ lib/orientdb-core-2.2.23.jar
 Bundle-Vendor: Orienteer.org
 Bundle-Localization: plugin
 Export-Package: org.orienteer.birt.orientdb.impl;version="1.0.0.qualifier";

@@ -2,7 +2,7 @@
 <feature
       id="org.orienteer.birt.orientdb.feature"
       label="OrientDB BIRT ODA Driver and UI"
-      version="2.2.20.qualifier"
+      version="2.2.23.qualifier"
       provider-name="Orienteer.org">
 
    <description>

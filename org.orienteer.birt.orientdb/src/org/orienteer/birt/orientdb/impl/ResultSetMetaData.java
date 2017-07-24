@@ -40,8 +40,8 @@ public class ResultSetMetaData implements IResultSetMetaData
 	    typesSqlTypes.put(OType.BOOLEAN, Types.BOOLEAN);
 	    typesSqlTypes.put(OType.LONG, Types.BIGINT);
 	    typesSqlTypes.put(OType.DOUBLE, Types.DOUBLE);
-	    typesSqlTypes.put(OType.DATE, Types.DATE);
-	    typesSqlTypes.put(OType.DATETIME, Types.TIMESTAMP);
+	    typesSqlTypes.put(OType.DATE, Types.VARCHAR);
+	    typesSqlTypes.put(OType.DATETIME, Types.VARCHAR);
 	    typesSqlTypes.put(OType.BYTE, Types.TINYINT);
 	    typesSqlTypes.put(OType.SHORT, Types.SMALLINT);
 	    typesSqlTypes.put(OType.DECIMAL, Types.DECIMAL);
