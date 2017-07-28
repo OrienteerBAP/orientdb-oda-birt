@@ -22,6 +22,8 @@ import org.eclipse.datatools.connectivity.oda.OdaException;
 import org.eclipse.datatools.connectivity.oda.SortSpec;
 import org.eclipse.datatools.connectivity.oda.spec.QuerySpecification;
 
+import com.orientechnologies.orient.core.db.ODatabaseDocumentInternal;
+import com.orientechnologies.orient.core.db.ODatabaseRecordThreadLocal;
 import com.orientechnologies.orient.core.record.impl.ODocument;
 
 public class HttpQuery implements IQuery{
@@ -47,7 +49,7 @@ public class HttpQuery implements IQuery{
 
 		try {
 		
-			URL obj = new URL(url+URLEncoder.encode(query, "UTF-8"));
+			URL obj = new URL(url+URLEncoder.encode(query, "UTF-8")+"/"+(getMaxRows()==0?-1:getMaxRows()));
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 	
 			con.setRequestMethod("GET");
@@ -71,6 +73,11 @@ public class HttpQuery implements IQuery{
 			in.close();
 	
 			String out = response.toString();
+			ODatabaseDocumentInternal db = ODatabaseRecordThreadLocal.INSTANCE.getIfDefined();
+			if (db==null){
+				//convert datetime to default format
+				out = out.replaceAll("\\\"(\\d\\d\\d\\d\\-\\d\\d\\-\\d\\d\\s\\d\\d\\:\\d\\d\\:\\d\\d)\\\"", "\"$1:000\"");
+			}
 			dbResult = new ODocument();
 			dbResult.fromJSON(out);
 			List<ODocument> resultList = dbResult.field("result");
