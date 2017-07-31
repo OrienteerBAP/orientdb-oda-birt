@@ -98,7 +98,13 @@ public class Query implements IQuery
 		try {
 			OSQLSynchQuery<ODocument> query = new OSQLSynchQuery<ODocument>(truncateQuery(queryText)+" LIMIT 1");
 			List<ODocument> dbResult = getOrMakeDBResult(db.command(query).execute(parameters));
-			curMetaData = new ResultSetMetaData(dbResult.get(0));
+			if (dbResult.isEmpty()){
+    			ODocument newDoc = new ODocument();
+    			newDoc.field("result",(Object)null);
+    			curMetaData = new ResultSetMetaData(newDoc);
+			}else{
+				curMetaData = new ResultSetMetaData(dbResult.get(0));
+			}
 		} catch (OCommandSQLParsingException e) {
 			throw new OdaException(e);
 		} catch (Exception e) {

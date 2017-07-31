@@ -42,7 +42,13 @@ public class HttpQuery implements IQuery{
 	public void prepare(String query) throws OdaException {
 		queryText = query;
 		List<ODocument> resultList = doQuery(Query.truncateQuery(query),1);
-		curMetaData = new ResultSetMetaData(resultList.get(0));
+		if(resultList.isEmpty()){
+			ODocument newDoc = new ODocument();
+			newDoc.field("result",(Object)null);			
+			curMetaData = new ResultSetMetaData(newDoc);
+		}else{
+			curMetaData = new ResultSetMetaData(resultList.get(0));
+		}
 	}
 
 	private List<ODocument> doQuery(String query,int maxRows) throws OdaException{
