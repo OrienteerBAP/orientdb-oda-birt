@@ -96,15 +96,7 @@ public class Query implements IQuery
 	private void updateMetaData() throws OdaException
 	{
 		try {
-
-			Pattern pattern = Pattern.compile("(select.*)where");
-			Matcher mat = pattern.matcher(queryText);
-			OSQLSynchQuery<ODocument> query;
-			if (mat.find()){
-				query = new OSQLSynchQuery<ODocument>(mat.group(1)+" LIMIT 1");
-			}else{
-				query = new OSQLSynchQuery<ODocument>(queryText+" LIMIT 1");
-			}
+			OSQLSynchQuery<ODocument> query = new OSQLSynchQuery<ODocument>(truncateQuery(queryText)+" LIMIT 1");
 			List<ODocument> dbResult = getOrMakeDBResult(db.command(query).execute(parameters));
 			curMetaData = new ResultSetMetaData(dbResult.get(0));
 		} catch (OCommandSQLParsingException e) {
@@ -113,6 +105,16 @@ public class Query implements IQuery
 			e.printStackTrace();
 		}
 	}
+
+	public static String truncateQuery(String query){
+		Pattern pattern = Pattern.compile("(select.*)where");
+		Matcher mat = pattern.matcher(query);
+		if (mat.find()){
+			return mat.group(1);
+		}else{
+			return query;
+		}
+	}  
 	/*
 	 * @see org.eclipse.datatools.connectivity.oda.IQuery#executeQuery()
 	 */

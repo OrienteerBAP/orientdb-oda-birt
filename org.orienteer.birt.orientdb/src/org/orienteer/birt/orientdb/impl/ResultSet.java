@@ -42,7 +42,7 @@ public class ResultSet implements IResultSet
     
     @SuppressWarnings("unchecked")
 	public ResultSet(Object sqlResult, ResultSetMetaData metadata) {
-    	if (sqlResult instanceof List){
+    	if (sqlResult instanceof List && !((List)sqlResult).isEmpty() ){
         	this.sqlResult = (List<ODocument>)sqlResult;
     	}else{
     		this.sqlResult = new ArrayList<ODocument>(1);

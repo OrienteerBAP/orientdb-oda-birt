@@ -30,7 +30,6 @@ public class HttpQuery implements IQuery{
 
 	private ODocument dbResult;
 	private ResultSetMetaData curMetaData;
-	private ResultSet curResultSet;
 	private int m_maxRows;
 	private String queryText;
 	private HttpConnection connection;
@@ -41,7 +40,12 @@ public class HttpQuery implements IQuery{
 	
 	@Override
 	public void prepare(String query) throws OdaException {
+		queryText = query;
+		List<ODocument> resultList = doQuery(Query.truncateQuery(query),1);
+		curMetaData = new ResultSetMetaData(resultList.get(0));
+	}
 
+	private List<ODocument> doQuery(String query,int maxRows) throws OdaException{
 		Properties connProperties = connection.getProperties();
 		String url = connProperties.getProperty(Connection.DB_URI_PROPERTY);//"remote:127.0.0.1/Orienteer";
 		String username = connProperties.getProperty(Connection.DB_USER_PROPERTY);//"admin";
@@ -49,7 +53,7 @@ public class HttpQuery implements IQuery{
 
 		try {
 		
-			URL obj = new URL(url+URLEncoder.encode(query, "UTF-8")+"/"+(getMaxRows()==0?-1:getMaxRows()));
+			URL obj = new URL(url+URLEncoder.encode(query, "UTF-8")+"/"+(maxRows==0?-1:maxRows));
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 	
 			con.setRequestMethod("GET");
@@ -80,28 +84,21 @@ public class HttpQuery implements IQuery{
 			}
 			dbResult = new ODocument();
 			dbResult.fromJSON(out);
-			List<ODocument> resultList = dbResult.field("result");
-			curMetaData = new ResultSetMetaData(resultList.get(0));
-			curResultSet = new ResultSet(resultList,curMetaData);
-		
+			return dbResult.field("result");
 		} catch (IOException e) {
 			throw new OdaException(e);
-		}
-
+		}			
 	}
-	
 	
 	
 	@Override
 	public IResultSet executeQuery() throws OdaException {
-		// TODO Auto-generated method stub
-		return curResultSet;
+		return new ResultSet(doQuery(queryText,getMaxRows()),curMetaData);
 	}
 
 	@Override
 	public void close() throws OdaException {
-		// TODO Auto-generated method stub
-		
+		queryText = "";		
 	}
 
 	@Override
