@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.orienteer</groupId>
 	<artifactId>org.orienteer.birt.orientdb</artifactId>
-	<version>1.0</version>
+	<version>1.1-SNAPSHOT</version>
 	<name>orientdb-oda-birt</name>
 	<description>Connector for Eclipse BIRT for OrientDB</description>
 	<url>http://orienteer.org</url>
@@ -10,7 +10,7 @@
 		<url>https://github.com/OrienteerBAP/orientdb-oda-birt/tree/master/org.orienteer.birt.orientdb</url>
 		<connection>scm:git:ssh://github.com/OrienteerBAP/orientdb-oda-birt.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/OrienteerBAP/orientdb-oda-birt.git</developerConnection>
-		<tag>v1.0</tag>
+		<tag>HEAD</tag>
 	</scm>
 	<issueManagement>
 		<system>github</system>
