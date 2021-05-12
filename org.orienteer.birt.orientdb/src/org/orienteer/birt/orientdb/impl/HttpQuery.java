@@ -83,7 +83,7 @@ public class HttpQuery implements IQuery{
 			in.close();
 	
 			String out = response.toString();
-			ODatabaseDocumentInternal db = ODatabaseRecordThreadLocal.INSTANCE.getIfDefined();
+			ODatabaseDocumentInternal db = ODatabaseRecordThreadLocal.instance().getIfDefined();
 			if (db==null){
 				//convert datetime to default format
 				out = out.replaceAll("\\\"(\\d\\d\\d\\d\\-\\d\\d\\-\\d\\d\\s\\d\\d\\:\\d\\d\\:\\d\\d)\\\"", "\"$1:000\"");
